@@ -22,7 +22,7 @@ export default function SelectStyle() {
           onChange={handleChange}
         >
           <MenuItem value="">
-            <em>Standart</em>
+            <em>None</em>
           </MenuItem>
           <MenuItem value={1}>--------------</MenuItem>
           <MenuItem value={2}>— — — —</MenuItem>
