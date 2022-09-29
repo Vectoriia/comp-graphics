@@ -26,6 +26,7 @@ code {
   color: white;
   padding-left: 2%;
   padding-right: 2%;
+  margin: 0;
   font-family: 'Bitter';
   font-style: normal;
   font-weight: 500;
@@ -138,25 +139,19 @@ code {
 /*----------------------------------FractalComponent----------------------------------*/
 
 .fractal-menu{
-  width: 100%;
-  top: 183px;
   background: #FFFFFF;
   box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.25);
   border-radius: 37px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  margin: 30px;
+  margin: 95px 18px;
   user-select: none;
-  padding: 30px;
+  padding: 43px;
 }
 .fractal-field{
   display: flex;
-  height: full;
   align-items: center;
-  justify-content: space-between;
-  margin: 30px;
   user-select: none;
   background-color: black;
 }

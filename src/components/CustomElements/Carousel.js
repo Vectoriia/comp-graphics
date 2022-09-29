@@ -7,14 +7,14 @@ import FrostyFractalCanvas from './FrostyFractalCanvas.js';
 
 export default function FractalCarousel (props){
     return (
-        <Carousel showArrows = {false} showStatus ={false} showThumbs={false} width = '900px' height = '650px'>
+        <Carousel showArrows = {false} showStatus ={false} showThumbs={false} width = '720px' height = '650px'>
             <div>
                 <p className='header' style = {{fontSize: '32px'}}>T-фрактал</p>
-                <TfractalCanvas width='600px' height='600px' color = {props.color} limit = {props.limit}/>
+                <TfractalCanvas width='600px' height='600px' color = {props.color} limit = {props.limit} pattern = {props.pattern} x = {props.x} y = {props.y}/>
             </div>
             <div>
                 <p className='header' style = {{fontSize: '32px'}}>Льодовий фрактал</p>
-                <FrostyFractalCanvas width='600px' height='600px' color = {props.color} limit = {props.limit}/>
+                <FrostyFractalCanvas width='600px' height='600px' color = {props.color} limit = {props.limit} pattern = {props.pattern} x = {props.x} y = {props.y}/>
             </div>
         </Carousel>
     );

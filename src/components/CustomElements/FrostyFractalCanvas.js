@@ -7,10 +7,9 @@ const FrostyFractalCanvas = props => {
     const canvas = canvasRef.current
     ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
       // довжина сторін задані + 100
       if (!!ctx){
-          drawFract({x:100, y:100},{x:500, y:100},  {x:500, y:500}, {x: 100, y:500}, props.limit, ctx)
+          drawFract({x:100+props.x, y:100+props.y},{x:500+props.x, y:100+props.y},  {x:500+props.x, y:500+props.y}, {x: 100+props.x, y:500+props.y}, props.limit, ctx)
       }
   })
 
@@ -18,7 +17,7 @@ const FrostyFractalCanvas = props => {
       ctx.beginPath();
       ctx.moveTo(p0.x, p0.y);
       ctx.lineTo(p1.x, p1.y);
-              
+      ctx.setLineDash(props.pattern);
       ctx.strokeStyle = props.color;
       ctx.lineWidth = 1;
       ctx.stroke();
@@ -82,7 +81,7 @@ const FrostyFractalCanvas = props => {
     }
     function drawFract(p0, p1, p2,p3, limit, ctx){
       drawRound(p0,p1,p2, p3, ctx);
-      if(limit>2){
+      if(limit>1){
         drawThird(p0, p1, limit-1, ctx)
         drawThird(p1, p2, limit-1, ctx)
         drawThird(p2, p3, limit-1, ctx)

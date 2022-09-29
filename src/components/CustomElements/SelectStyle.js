@@ -4,13 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectStyle() {
-  const [style, setStyle] = React.useState('');
-
-  const handleChange = (event) => {
-    setStyle(event.target.value);
-  };
-
+export default function SelectStyle(props) {
   return (
     <div>
       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
@@ -18,15 +12,14 @@ export default function SelectStyle() {
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
-          value={style}
-          onChange={handleChange}
+          onChange={props.changeHandler}
         >
-          <MenuItem value="">
-            <em>None</em>
+          <MenuItem value={[]}>
+            <em>none</em>
           </MenuItem>
-          <MenuItem value={1}>--------------</MenuItem>
-          <MenuItem value={2}>— — — —</MenuItem>
-          <MenuItem value={3}>_________</MenuItem>
+          <MenuItem value={[10,10]}>small</MenuItem>
+          <MenuItem value={[20,5]}>big</MenuItem>
+          <MenuItem value={[15, 3, 3, 3]}>line/dot</MenuItem>
         </Select>
       </FormControl>
     </div>

@@ -109,7 +109,7 @@ export default function MiniDrawer() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open} sx = {{backgroundColor: '#1F1F1F'}}>
-        <Toolbar>
+        <Toolbar sx={{justifyContent: 'space-between'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -123,9 +123,20 @@ export default function MiniDrawer() {
           >
             <MenuIcon sx={{ fontSize: "45px" }} />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" >
-            Комп'ютерна графіка
-          </Typography>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Typography variant="h6" noWrap component="div" sx={{marginRight: '20px'}}>
+              Комп'ютерна графіка
+            </Typography>
+            <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {<img src = {FractalIcon} draggable = {false}/> }
+                </ListItemIcon>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer 
@@ -135,8 +146,10 @@ export default function MiniDrawer() {
           sx: {
             color: 'white',
             backgroundColor: 'black',
+            justifyContent: 'space-between'
           }
       }}>
+        <div>
         <DrawerHeader sx = {{backgroundColor: 'black'}}>
           <IconButton onClick={handleDrawerClose} sx = {{color: 'white'}}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -235,6 +248,7 @@ export default function MiniDrawer() {
               </ListItemButton>
             </ListItem>
         </List>
+        </div>
         <List >
             <ListItem  key={'Головна'} disablePadding sx={{ display: 'block' }}>
               <ListItemButton

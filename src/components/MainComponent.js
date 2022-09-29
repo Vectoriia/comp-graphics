@@ -22,7 +22,7 @@ export default function Main (){
                 <Box sx={{ display: 'flex' }}>
                     <BrowserRouter>
                         <Drawer/>
-                        <Box component="main">
+                        <Box component="main" width={"100%"}>
                             <DrawerHeader />
                             <Routes >
                                 <Route  path="/home" element={<Home/>} />

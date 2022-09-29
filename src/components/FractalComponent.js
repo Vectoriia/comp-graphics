@@ -7,6 +7,8 @@ import Slider from '@mui/material/Slider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SelectStyle from './CustomElements/SelectStyle.js';
 import FractalCarousel from './CustomElements/Carousel';
+import Button from '@mui/material/Button';
+import { SketchPicker } from 'react-color';
 const themeSlider = createTheme({
     status: {
       danger: '#e53e3e',
@@ -42,15 +44,40 @@ const theme = createTheme({
   });
 export default function Fractal (){
     const [limit, setLimit] = useState(4);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+    const [style, setStyle] = useState([]);
+    const [open, setopen] = useState(false);
+    const [color, setColor] = useState('#ffffff');
+    const [buttonColor, setButtonColor] = useState('#000000');
     
     useEffect(() => {
         console.log(limit);
-    }, [limit])
+    }, [limit]);
+    const changeStyleHandler = event => {
+        console.log(event.target.value);
+        setStyle(event.target.value);
+      };
+      const changeXHandler= event => {
+        setX(Number(event.target.value));
+        
+      };
+      const changeYHandler = event => {
+        setY(Number(event.target.value));
+      };
+    const openBox = () => {
+        setopen(!open);
+        if(color === '#ffffff'){
+            setButtonColor('#000000')
+        }
+        else if(open === true){
+            setButtonColor(color)
+        }
+    };
 
     return(
-        <>
-     <div className="container" style={{flexDirection: 'row'}}>
-            <div className="fractal-menu">
+        <div className="container" style={{flexDirection: 'row'}}>
+            <div className="fractal-menu" style={{ width: '600px'}}>
                 <div className ="header"
                     style={{
                         width: '100%',
@@ -67,30 +94,26 @@ export default function Fractal (){
                 <img src={QuestionIcon} />
                 </div>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', textAlign:'left', paddingLeft: '20px',}}>
-                    Кількість ітерацій:
-                </div>
-                <div style={{
-                        paddingLeft: '10%', paddingRight: '10%', width: '100%'
-                    }}>
-                        <ThemeProvider theme={themeSlider}>
-                            <Slider
-                                aria-label="Temperature"
-                                defaultValue={4}
-                                getAriaValueText={valuetext}
-                                valueLabelDisplay="auto"
-                                step={1}
-                                marks
-                                min={1}
-                                max={8}
-                                sx = {{width: '100%'}} 
-                                value={limit}  
-                                onChange={e => setLimit(e.target.value)}
-                            />
-                        </ThemeProvider>
+                style={{ color: 'black', width: '100%', paddingLeft: '30px', marginTop: '22px'}}>
+                    Кількість ітерацій:            
+                    <ThemeProvider theme={themeSlider}>
+                        <Slider
+                            aria-label="Temperature"
+                            defaultValue={4}
+                            getAriaValueText={valuetext}
+                            valueLabelDisplay="auto"
+                            step={1}
+                            marks
+                            min={1}
+                            max={8}
+                            sx = {{width: '100%'}} 
+                            value={limit}  
+                            onChange={e => setLimit(e.target.value)}
+                        />
+                    </ThemeProvider>
                 </div>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', textAlign:'left', paddingLeft: '20px',}}>
+                style={{ color: 'black', width: '100%', paddingLeft: '30px', marginTop: '49px', height: '47px'}}>
                     Координати центру:
                 </div>
                 <div  style={{
@@ -108,19 +131,32 @@ export default function Fractal (){
                         paddingLeft: '10%', paddingRight: '20px'
                     }}>
                         <ThemeProvider theme={theme}>
-                            <TextField id="filled-basic" label="x:"  type="number" InputProps={{ inputProps: { min: 0, max: 200 } }}  variant="filled" />
+                            <TextField 
+                                id="filled-basic" 
+                                label="x:"  
+                                type="number" 
+                                InputProps={{ inputProps: { min: -200, max: 200, step: "10" } }}  
+                                variant="filled" 
+                                onChange={(e) => changeXHandler(e)}/>
                         </ThemeProvider>
                     </div>
                     <div style={{
                         paddingLeft: '20px', paddingRight: '10%'
                     }}>
                         <ThemeProvider theme={theme}>
-                            <TextField id="filled-basic" label="y:"  type="number" InputProps={{ inputProps: { min: 0, max: 200 } }}  variant="filled" />
+                            <TextField 
+                                id="filled-basic" 
+                                label="y:"  
+                                type="number" 
+                                step = {10}
+                                InputProps={{ inputProps: { min: -200, max: 200, step: "10"  }}}  
+                                variant="filled" 
+                                onChange={(e) => changeYHandler(e)}/>
                         </ThemeProvider>
                     </div>
                 </div>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', textAlign:'left', paddingLeft: '20px',}}>
+                style={{ color: 'black', width: '100%', textAlign:'left', paddingLeft: '20px', marginTop: '49px', height: '47px'}}>
                     Лінія побудови:
                 </div>
                 <div  style={{
@@ -138,22 +174,25 @@ export default function Fractal (){
                         paddingLeft: '10%', paddingRight: '20px'
                     }}>
                         <ThemeProvider theme={theme}>
-                            <SelectStyle/>
+                            <SelectStyle changeHandler={changeStyleHandler}/>
                         </ThemeProvider>
                     </div>
                     <div style={{
                         paddingLeft: '20px', paddingRight: '10%'
                     }}>
-                        <ThemeProvider theme={theme}>
-                            <TextField id="filled-basic" label="y:" variant="filled" />
-                        </ThemeProvider>
+                    {open &&<SketchPicker  color={color} onChangeComplete = { ( color )=> { setColor ( color.hex ) } }/>}
+                    <ThemeProvider theme={theme}>
+                    <Button variant="contained" onClick={() => openBox()}className="value" style={{backgroundColor: buttonColor }}  >
+                        {open === true ? 'Close' : 'Change color'}
+                    </Button>
+                    </ThemeProvider>
+                    
                     </div>
                 </div>
             </div>
-            <div className="fractal-field">
-                <FractalCarousel color ="blue" limit = {limit}/>
+            <div className="fractal-field" style={{flex: 1}}>
+                <FractalCarousel color ={color} limit = {limit} pattern = {style} x = {x} y = {y}/>
             </div>
         </div>
-        </>   
     );
 }
