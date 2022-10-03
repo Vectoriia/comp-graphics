@@ -9,7 +9,7 @@ export default function FractalCarousel (props){
     return (
         <Carousel showArrows = {false} showStatus ={false} showThumbs={false} width = '720px' height = '650px'>
             <div>
-                <p className='header' style = {{fontSize: '32px'}}>T-фрактал</p>
+                <p className='header' style = {{fontSize: '32px', paddingTop: '0px'}}>T-фрактал</p>
                 <TfractalCanvas width='600px' height='600px' color = {props.color} limit = {props.limit} pattern = {props.pattern} x = {props.x} y = {props.y}/>
             </div>
             <div>

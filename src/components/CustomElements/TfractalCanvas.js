@@ -10,6 +10,8 @@ const TfractalCanvas = (props) => {
 
     ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 600, 600);
     ctx.fillStyle = props.color;
     ctx.fillRect(100+props.x, 100+props.y, 400, 400);
 
@@ -127,6 +129,6 @@ const TfractalCanvas = (props) => {
       return;
     }
   }
-  return <canvas ref={canvasRef} {...props} />;
+  return <> <canvas ref={canvasRef} {...props} /></>;
 };
 export default TfractalCanvas;

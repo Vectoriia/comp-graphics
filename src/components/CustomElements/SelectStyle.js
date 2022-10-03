@@ -8,11 +8,18 @@ export default function SelectStyle(props) {
   return (
     <div>
       <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-filled-label">Style</InputLabel>
+        <InputLabel id="demo-simple-select-filled-label">Стиль</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
           onChange={props.changeHandler}
+          style={{
+            height: "50px", 
+            width: "180px", 
+            fontFamily: 'Bitter', 
+            fontStyle: "normal",
+            fontWeight: "500", 
+            fontSize: "20px"}}
         >
           <MenuItem value={[]}>
             <em>none</em>

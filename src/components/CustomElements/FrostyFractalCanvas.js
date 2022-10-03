@@ -7,6 +7,8 @@ const FrostyFractalCanvas = props => {
     const canvas = canvasRef.current
     ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 600, 600);
       // довжина сторін задані + 100
       if (!!ctx){
           drawFract({x:100+props.x, y:100+props.y},{x:500+props.x, y:100+props.y},  {x:500+props.x, y:500+props.y}, {x: 100+props.x, y:500+props.y}, props.limit, ctx)

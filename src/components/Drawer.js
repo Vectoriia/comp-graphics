@@ -18,11 +18,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '../img/homeIcon.svg';
 import FractalIcon from '../img/fractalIcon.svg';
+import MainIcon from '../img/mainIcon.svg';
 import ColorIcon from '../img/colorIcon.svg';
 import AffineIcon from '../img/affineIcon.svg';
 import InfoIcon from '../img/infoIcon.svg';
 import {Link} from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import '../index.css';
 const drawerWidth = 270;
 
 const openedMixin = (theme) => ({
@@ -92,11 +95,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
+const themeItem = createTheme({
+  overrides: {
+    MuiListItem: {
+      root: {
+        "&$selected": {
+          backgroundColor: "red",
+          "&:hover": {
+            backgroundColor: "orange",
+          },
+        },
+      },
+      button: {
+        "&:hover": {
+          backgroundColor: "yellow",
+        },
+      },
+    },
+  },
+});
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [whichPage, setWhichPage] = useState([false, false, false, false, true]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -105,6 +127,20 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  const changePage = (index) => {
+    const arr = [];
+    for(let i=0;i<5;i++){
+      if(i===index){
+        arr.push(true)
+      }else{
+        arr.push(false)
+      }
+    } 
+    setWhichPage([arr]);
+};
+const selectedItemStyle = {
+  backgroundColor: '#2BD5A5'
+ }
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -134,7 +170,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {<img src = {FractalIcon} draggable = {false}/> }
+                  {<img src = {MainIcon} style={{width: "80%"}} draggable = {false}/> }
                 </ListItemIcon>
           </div>
         </Toolbar>
@@ -202,7 +238,11 @@ export default function MiniDrawer() {
                 <ListItemText primary={'Колірні схеми'} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <ListItem  key={'Рухомі зображення'} disablePadding sx={{ display: 'block' }}>
+            <ListItem  key={'Рухомі зображення'} disablePadding 
+              sx={{ 
+                display: 'block', 
+                }}
+                selectedItemStyle={selectedItemStyle}>
               <ListItemButton
                 sx={{
                   borderRadius: '33px',
@@ -250,7 +290,7 @@ export default function MiniDrawer() {
         </List>
         </div>
         <List >
-            <ListItem  key={'Головна'} disablePadding sx={{ display: 'block' }}>
+            <ListItem  key={'Головна'} disablePadding sx={{ display: 'block', }}  selected className="MenuItem">
               <ListItemButton
                 sx={{
                   borderRadius: '33px',

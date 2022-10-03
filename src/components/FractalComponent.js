@@ -7,8 +7,10 @@ import Slider from '@mui/material/Slider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SelectStyle from './CustomElements/SelectStyle.js';
 import FractalCarousel from './CustomElements/Carousel';
+import DownloadingIcon from '@mui/icons-material/Downloading';
 import Button from '@mui/material/Button';
 import { SketchPicker } from 'react-color';
+import DownloadIcon from '../img/downloadIcon.svg';
 const themeSlider = createTheme({
     status: {
       danger: '#e53e3e',
@@ -42,6 +44,15 @@ const theme = createTheme({
       },
     },
   });
+  function download(){
+    var canvas = document.getElementById("canvas");
+    var url = canvas.toDataURL("image/png");
+    var link = document.createElement('a');
+    link.download = 'filename.png';
+    link.href = url;
+    link.click();
+  }
+  
 export default function Fractal (){
     const [limit, setLimit] = useState(4);
     const [x, setX] = useState(0);
@@ -50,7 +61,6 @@ export default function Fractal (){
     const [open, setopen] = useState(false);
     const [color, setColor] = useState('#ffffff');
     const [buttonColor, setButtonColor] = useState('#000000');
-    
     useEffect(() => {
         console.log(limit);
     }, [limit]);
@@ -76,7 +86,7 @@ export default function Fractal (){
     };
 
     return(
-        <div className="container" style={{flexDirection: 'row'}}>
+        <div className="container" style={{flexDirection: 'row', height: '94%'}}>
             <div className="fractal-menu" style={{ width: '600px'}}>
                 <div className ="header"
                     style={{
@@ -90,12 +100,17 @@ export default function Fractal (){
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                    }}> Фактали
-                <img src={QuestionIcon} />
+                    }}> Фрактали
+                    <div style={{display: "flex"}}>
+                        <img src={QuestionIcon} />
+                        <img src={DownloadIcon} onClick={() => this.handleCanvasDownload(this.canvasRef)}/>
+                    </div>
                 </div>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', paddingLeft: '30px', marginTop: '22px'}}>
-                    Кількість ітерацій:            
+                    style={{ color: 'black', width: '100%', paddingLeft: '30px', marginTop: '22px'}}>
+                    Кількість ітерацій:    
+                    <div className ="text"
+                    style={{ paddingLeft: '40px'}}>    
                     <ThemeProvider theme={themeSlider}>
                         <Slider
                             aria-label="Temperature"
@@ -106,11 +121,12 @@ export default function Fractal (){
                             marks
                             min={1}
                             max={8}
-                            sx = {{width: '100%'}} 
+                            sx = {{width: '90%'}} 
                             value={limit}  
                             onChange={e => setLimit(e.target.value)}
                         />
                     </ThemeProvider>
+                    </div>    
                 </div>
                 <div className ="text"
                 style={{ color: 'black', width: '100%', paddingLeft: '30px', marginTop: '49px', height: '47px'}}>
@@ -137,7 +153,14 @@ export default function Fractal (){
                                 type="number" 
                                 InputProps={{ inputProps: { min: -200, max: 200, step: "10" } }}  
                                 variant="filled" 
-                                onChange={(e) => changeXHandler(e)}/>
+                                onChange={(e) => changeXHandler(e)}
+                                style={{ 
+                                    height: "50px", 
+                                    width: "180px", 
+                                    fontFamily: 'Bitter', 
+                                    fontStyle: "normal",
+                                    fontWeight: "500", 
+                                    fontSize: "15px"}} />
                         </ThemeProvider>
                     </div>
                     <div style={{
@@ -151,7 +174,14 @@ export default function Fractal (){
                                 step = {10}
                                 InputProps={{ inputProps: { min: -200, max: 200, step: "10"  }}}  
                                 variant="filled" 
-                                onChange={(e) => changeYHandler(e)}/>
+                                onChange={(e) => changeYHandler(e)}
+                                style={{ 
+                                    height: "50px", 
+                                    width: "180px", 
+                                    fontFamily: 'Bitter', 
+                                    fontStyle: "normal",
+                                    fontWeight: "500", 
+                                    fontSize: "15px"}}/>
                         </ThemeProvider>
                     </div>
                 </div>
@@ -182,16 +212,25 @@ export default function Fractal (){
                     }}>
                     {open &&<SketchPicker  color={color} onChangeComplete = { ( color )=> { setColor ( color.hex ) } }/>}
                     <ThemeProvider theme={theme}>
-                    <Button variant="contained" onClick={() => openBox()}className="value" style={{backgroundColor: buttonColor }}  >
-                        {open === true ? 'Close' : 'Change color'}
-                    </Button>
+                        <Button variant="contained" 
+                                onClick={() => openBox()}className="value" 
+                                style={{
+                                    backgroundColor: buttonColor, 
+                                    height: "50px", 
+                                    width: "180px", 
+                                    fontFamily: 'Bitter', 
+                                    fontStyle: "normal",
+                                    fontWeight: "500", 
+                                    fontSize: "15px"}}  >
+                            {open === true ? 'Закрити' : 'Змінити колір'}
+                        </Button>
                     </ThemeProvider>
                     
                     </div>
                 </div>
             </div>
             <div className="fractal-field" style={{flex: 1}}>
-                <FractalCarousel color ={color} limit = {limit} pattern = {style} x = {x} y = {y}/>
+                <FractalCarousel color ={color} limit = {limit} pattern = {style} x = {x} y = {y} />
             </div>
         </div>
     );
