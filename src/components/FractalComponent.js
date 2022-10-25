@@ -103,7 +103,7 @@ export default function Fractal (){
                     }}> Фрактали
                     <div style={{display: "flex"}}>
                         <img src={QuestionIcon} />
-                        <img src={DownloadIcon} onClick={() => this.handleCanvasDownload(this.canvasRef)}/>
+                        {/*<img src={DownloadIcon} onClick={() => this.handleCanvasDownload(this.canvasRef)}/>*/}
                     </div>
                 </div>
                 <div className ="text"

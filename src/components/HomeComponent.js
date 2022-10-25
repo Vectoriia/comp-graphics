@@ -35,7 +35,7 @@ export default function Home (){
                         <div className="header-1">Фрактали</div>
                     </div>
                 </div>
-                <div className="overlay-container">  
+                <div className="overlay-container" onClick={e => goTo(e, "/colorings")}>  
                     <img className="card" src = {Colors} draggable = {false}/>
                     <div className="overlay" draggable = {false}>
                        У цьому розділі ви зомжете перевести  колірну схему зображення з адаптивної 

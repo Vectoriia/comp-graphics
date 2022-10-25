@@ -138,7 +138,7 @@ export default function MiniDrawer() {
     } 
     setWhichPage([arr]);
 };
-const selectedItemStyle = {
+const selecteditemstyle = {
   backgroundColor: '#2BD5A5'
  }
   return (
@@ -224,7 +224,7 @@ const selectedItemStyle = {
                   px: 2.5,
                 }} 
                 draggable = {false}
-                component={Link} to = '/'
+                component={Link} to = '/colorings'
               >
                 <ListItemIcon
                   sx={{
@@ -242,7 +242,7 @@ const selectedItemStyle = {
               sx={{ 
                 display: 'block', 
                 }}
-                selectedItemStyle={selectedItemStyle}>
+                selecteditemstyle={selecteditemstyle}>
               <ListItemButton
                 sx={{
                   borderRadius: '33px',
