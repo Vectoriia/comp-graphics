@@ -2,10 +2,12 @@ import ImageDefault from '../img/coloringImage.png';
 import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useRef  } from 'react';
 import Slider from '@mui/material/Slider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { width } from '@mui/system';
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#8C74B5'),
     backgroundColor: '#8C74B5',
@@ -100,12 +102,8 @@ export default function ColoringScheme (){
             ctx1.drawImage(img, 0, 0, canvas1.width, canvas1.height);
             const canvas2 = canvasRef2.current
             ctx2 = canvas2.getContext('2d')
-            //console.log("ctx2 is: ",ctx2);
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
             ctx2.drawImage(img, 0, 0, canvas2.width, canvas2.height);
-            //ctx.globalCompositeOperation = "saturation";
-            //ctx.fillStyle = "hsl(0,10%,10%)";
-            //ctx.fillRect(0,0,canvas.width,canvas.height);
             const zoomCanvas = zoomRef.current
             zoom = zoomCanvas.getContext('2d')
           };
@@ -136,7 +134,6 @@ export default function ColoringScheme (){
     const [rgba, setRgba] = useState([0,0,0,0]);
     const [hsvGlobal, setHsv] = useState([0,0,0]);
     const handleMouseMove = event => {
-        //alert("onMouseMove");
         let canvas
         let bounding
         if(event.target === canvasRef1.current){
@@ -146,16 +143,13 @@ export default function ColoringScheme (){
         }else if(event.target === canvasRef2.current){
             canvas = canvasRef2.current
             bounding = canvas.getBoundingClientRect();
-            //console.log("ctx2 is: ",ctx2);
             curCtx = ctx2
         }else{
-            //console.log("out")
             return
         }
         
         const x = event.clientX - bounding.left;
         const y = event.clientY - bounding.top;
-        //console.log("ctx is: ",curCtx);
         const pixel = curCtx.getImageData(x, y, 1, 1);
         const data = pixel.data;
         
@@ -216,7 +210,15 @@ export default function ColoringScheme (){
 
     return(
         <div className='container'> 
-            <div className="coloring-images">
+          <div className="coloring-images" style={{margin: '10px 0'}}>
+            <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                  gap: '80px',
+                }}
+            >  
                 <div className='image-handler'>
                     {/*<img alt="not found" src={file || 'https://images.pexels.com/photos/6899804/pexels-photo-6899804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} draggable = {false} width="500px" height = "500px"/>*/}
                     <canvas ref={canvasRef1} height="500px" width= "500px" onMouseMove={handleMouseMove}/>
@@ -225,7 +227,8 @@ export default function ColoringScheme (){
                     <canvas ref={canvasRef2} height="500px" width= "500px" onMouseMove={handleMouseMove}/>
                 </div>
             </div>
-            <div className="coloring-menu">
+          </div>
+          <div className="coloring-menu">
             <Grid
                 container
                 direction="row"
@@ -233,57 +236,58 @@ export default function ColoringScheme (){
                 alignItems="center"
                 spacing={4}
             >  
-            <Grid item xs={1}>
-                <canvas ref={zoomRef} width="100" height="100"/>
-            </Grid>
-                <Grid item xs={3}>
+              <Grid item xs={1}>
+                  <canvas ref={zoomRef} width="100" height="100"/>
+              </Grid>
+              <Grid item xs={3}>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', height: '47px'}}>
+                  style={{ color: 'black', width: '100%', height: '47px'}}
+                >
                     RGB: {rgba[0]}, {rgba[1]}, {rgba[2]}
                 </div>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', height: '47px'}}
+                  style={{ color: 'black', width: '100%', height: '47px'}}
                 >
                     HSV: {hsvGlobal[0]}°, {hsvGlobal[1]}, {hsvGlobal[2]} 
                 </div>
-                </Grid>
-                <Grid item xs={3}>
+              </Grid>
+              <Grid item xs={3}>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', height: '47px'}}>
-                    Насиченість по зеленому:
+              style={{ color: 'black', width: '100%', height: '47px'}}>
+                  Насиченість по зеленому:
                 </div>
                 <ThemeProvider theme={themeSlider}>
-                        <Slider
-                            aria-label="Temperature"
-                            defaultValue={0}
-                            getAriaValueText={valuetext}
-                            valueLabelDisplay="auto"
-                            step={5}
-                            marks
-                            min={-100}
-                            max={100}
-                            sx = {{width: '90%'}} 
-                            value={saturation}  
-                            onChange={e => setSaturation(e.target.value)}
-                        />
-                    </ThemeProvider>
-                </Grid>
-                <Grid item xs={4}>
+                      <Slider
+                          aria-label="Temperature"
+                          defaultValue={0}
+                          getAriaValueText={valuetext}
+                          valueLabelDisplay="auto"
+                          step={5}
+                          marks
+                          min={-100}
+                          max={100}
+                          sx = {{width: '90%'}} 
+                          value={saturation}  
+                          onChange={e => setSaturation(e.target.value)}
+                      />
+                  </ThemeProvider>
+              </Grid>
+              <Grid item xs={4}>
                 <div className ="text"
-                style={{ color: 'black', width: '100%', height: '47px'}}>
-                    Конвертувати своє зображення:
+                  style={{ color: 'black', width: '100%', height: '47px'}}
+                >
+                  Конвертувати своє зображення:
                 </div>
-                    <ColorButton variant="contained" onClick={handleClick}>
-                        Upload
-                    </ColorButton>
-                    <input type="file" onChange={handleChange} ref={hiddenFileInput} style={{display:'none'}}/>
-                    <ColorButton variant="contained" onClick={e => download(e)}>
-                        Download
-                    </ColorButton>
-                </Grid>
+                <ColorButton variant="contained" onClick={handleClick} style ={{marginRight: "40px", marginLeft:"8px", width: "120px"}}>
+                    Upload
+                </ColorButton>
+                <input type="file" onChange={handleChange} ref={hiddenFileInput} style={{display:'none'}}/>
+                <ColorButton variant="contained" onClick={e => download(e)} style ={{width: "120px"}}>
+                    Download
+                </ColorButton>
+              </Grid>
             </Grid>
-            
-            </div>
+          </div>
         </div>        
     )
 }
