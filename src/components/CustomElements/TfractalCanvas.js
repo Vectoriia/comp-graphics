@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 
-const TfractalCanvas = (props) => {
+const TfractalCanvas = React.forwardRef((props, ref) => {
   let ctx = null;
-  const canvasRef = useRef(null);
+  const canvasRef = ref;
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
     ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
@@ -24,7 +23,7 @@ const TfractalCanvas = (props) => {
       );
     }
   });
-
+ // useEffect(()=>childToParent(canvasRef),[canvasRef]);
   function drawLine(p0, p1) {
     ctx.beginPath();
     ctx.moveTo(p0.x, p0.y);
@@ -129,6 +128,7 @@ const TfractalCanvas = (props) => {
       return;
     }
   }
-  return <> <canvas ref={canvasRef} {...props} /></>;
-};
+  return <><canvas ref={ref} {...props} /></>;
+});
+
 export default TfractalCanvas;

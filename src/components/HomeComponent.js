@@ -18,7 +18,7 @@ export default function Home (){
     return(  
         <div className='container'> 
             <div className="square">
-                    <h1 className="header" style={{paddingTop: "25px"}}>Вивчай комп’ютерну графіку</h1>
+                    <h1 className="header" style={{paddingTop: "45px"}}>Вивчай комп’ютерну графіку</h1>
                     <p className="text">Комп’ютерна графіка – дуже обширна галузь комп’ютерних знань, 
                         яка пройшла розвиток як складна наукова дисципліна. Сучасна КГ визначається багатьма напрямками і 
                         різноманітними застосуваннями. Для одних з них, наприклад, основою є автоматизація креслення технічної 
@@ -45,7 +45,7 @@ export default function Home (){
                         <div className="header-2">Колірні схеми</div>
                     </div>
                 </div>
-                <div className="overlay-container">  
+                <div className="overlay-container" onClick={e => goTo(e, "/affinity")}>  
                     <img className="card" src = {Affine} draggable = {false}/>
                     <div className="overlay" draggable = {false}>
                         У цьому розділі ви познайомитесь з афінними перетвореннями та на прикладі 

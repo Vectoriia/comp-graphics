@@ -251,7 +251,7 @@ const selecteditemstyle = {
                   px: 2.5,
                 }}
                 draggable = {false} 
-                component={Link} to = '/'
+                component={Link} to = '/affinity'
               >
                 <ListItemIcon
                   sx={{

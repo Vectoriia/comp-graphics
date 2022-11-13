@@ -118,7 +118,6 @@ export default function ColoringScheme (){
     const changeSaturationHandler = event=>
     {
         setSaturation(event.target.value)
-
     }
     const download = (e) =>{
         e.preventDefault();
@@ -221,10 +220,10 @@ export default function ColoringScheme (){
             >  
                 <div className='image-handler'>
                     {/*<img alt="not found" src={file || 'https://images.pexels.com/photos/6899804/pexels-photo-6899804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} draggable = {false} width="500px" height = "500px"/>*/}
-                    <canvas ref={canvasRef1} height="500px" width= "500px" onMouseMove={handleMouseMove}/>
+                    <canvas ref={canvasRef1} height="500px" width= "600px" onMouseMove={handleMouseMove}/>
                 </div>
                 <div className='image-handler'>
-                    <canvas ref={canvasRef2} height="500px" width= "500px" onMouseMove={handleMouseMove}/>
+                    <canvas ref={canvasRef2} height="500px" width= "600px" onMouseMove={handleMouseMove}/>
                 </div>
             </div>
           </div>

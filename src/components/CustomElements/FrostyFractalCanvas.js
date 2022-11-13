@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useEffect, useRef  } from 'react';
 let ctx = null;
-const FrostyFractalCanvas = props => {
-  const canvasRef = useRef(null)
+const FrostyFractalCanvas = React.forwardRef((props, ref) => {
+  const canvasRef = ref;
   useEffect(() => {
     const canvas = canvasRef.current
     ctx = canvas.getContext('2d')
@@ -91,6 +91,7 @@ const FrostyFractalCanvas = props => {
       }
       
     }
-    return <canvas ref={canvasRef} {...props}/>
-  }
+    return <canvas ref={ref} {...props}/>
+  });
+
   export default FrostyFractalCanvas
