@@ -1,10 +1,10 @@
 import '../index.css';
 import { useEffect, useRef, useState  } from 'react';
-import QuestionIcon from '../img/question.svg';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import SelectVertex from './CustomElements/SelectVertex.js';
+import BasicModal from './CustomElements/BaseModal.js';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import DownloadingIcon from '@mui/icons-material/Downloading';
 const theme = createTheme({
@@ -54,6 +54,9 @@ export default function AffineTransformation (){
     const [ACord, setACord] = useState([1, 3]);
     const [BCord, setBCord] = useState([2, 5]);
     const [CCord, setCCord] = useState([4,3]);
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () => setOpenModal(true);
+    const handleClose = () => setOpenModal(false);
     canvasRef = useRef(null)
     const changeVertexHandler = event => {
         setVertex(event.target.value);
@@ -123,7 +126,7 @@ export default function AffineTransformation (){
         if(canvasRef != null){
             const url = canvasRef.current.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = 'result.png';
+            link.download = 'affinity.png';
             link.href = url;
             link.click();
         }
@@ -152,7 +155,11 @@ export default function AffineTransformation (){
                     <div style={{display: "flex",flexDirection: 'row',
                         justifyContent: 'space-around',}}>
                         <DownloadingIcon fontSize='32px'onClick={(e) => handleCanvasDownload(e)}/>
-                        <HelpOutlineIcon fontSize='32px'onClick={(e) => handleCanvasDownload(e)}/>
+                        <HelpOutlineIcon fontSize='32px'onClick={handleOpen} />
+                        <BasicModal open = {openModal} 
+                                    handleClose = {handleClose} 
+                                    text = "    На цій сторінці ти маєш змогу застосувати афінні перетворення для взаємодії з трикутником.  Для початку задай координати вершин, які заманеться. Далі є дві можливості для задання ветора руху: можна задати кут повороту та обрати вершину навколо якої він буде відбуватися(проти годинникової стрілки), після чого ти можеш обрати коефіцієнт зміни розміру за х чи у (тобто за віссю абсцис чи ординат). Натисни кнопку застосувати, трикутник продовжить заданий рух до моменту виходу за межі координатної площини. Ти можеш у будь-який момент зупинити його рух та змінити конфігурації. А за допомогою кнопки праворуч від назви можна завантажити результуюче зображення."
+                                    />
                         {/*<img src={DownloadIcon} onClick={() => this.handleCanvasDownload(this.canvasRef)}/>*/}
                     </div>
                 </div>

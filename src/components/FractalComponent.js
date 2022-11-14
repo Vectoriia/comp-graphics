@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import '../index.css';
-import QuestionIcon from '../img/question.svg';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import TextField from '@mui/material/TextField';
 import Slider from '@mui/material/Slider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SelectStyle from './CustomElements/SelectStyle.js';
 import FractalCarousel from './CustomElements/Carousel';
-import DownloadingIcon from '@mui/icons-material/Downloading';
 import Button from '@mui/material/Button';
 import { SketchPicker } from 'react-color';
-import DownloadIcon from '../img/downloadIcon.svg';
+import BasicModal from './CustomElements/BaseModal.js';
 const themeSlider = createTheme({
     status: {
       danger: '#e53e3e',
@@ -44,14 +43,6 @@ const theme = createTheme({
       },
     },
   });
-  function download(){
-    var canvas = document.getElementById("canvas");
-    var url = canvas.toDataURL("image/png");
-    var link = document.createElement('a');
-    link.download = 'filename.png';
-    link.href = url;
-    link.click();
-  }
   
 export default function Fractal (){
     const [limit, setLimit] = useState(4);
@@ -61,6 +52,9 @@ export default function Fractal (){
     const [open, setopen] = useState(false);
     const [color, setColor] = useState('#ffffff');
     const [buttonColor, setButtonColor] = useState('#000000');
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () => setOpenModal(true);
+    const handleClose = () => setOpenModal(false);
     useEffect(() => {
         console.log(limit);
     }, [limit]);
@@ -102,7 +96,11 @@ export default function Fractal (){
                         alignItems: 'center',
                     }}> Фрактали
                     <div style={{display: "flex"}}>
-                        <img src={QuestionIcon} />
+                        <HelpOutlineIcon  fontSize='64px' onClick={handleOpen}/>
+                        <BasicModal open = {openModal} 
+                                    handleClose = {handleClose} 
+                                    text = "    На цій сторінці ти маєш змогу побудувати два фрактали льодовий та Т-фрактал. Ти можеш перемкнутись між ними за допомогою точок під фракталом. Для побудови повзунком встанови кількість ітерацій (етап побудови), координати центру обраного фрактала та стилі для лінії побудови. Також ти можеш завантажити створений фрактал за допомогою кнопки біля його назви."
+                                    />
                         {/*<img src={DownloadIcon} onClick={() => this.handleCanvasDownload(this.canvasRef)}/>*/}
                     </div>
                 </div>

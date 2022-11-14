@@ -1,13 +1,12 @@
-import ImageDefault from '../img/coloringImage.png';
 import React, { useState } from "react";
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useRef  } from 'react';
 import Slider from '@mui/material/Slider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { width } from '@mui/system';
+import BasicModal from './CustomElements/BaseModal.js';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#8C74B5'),
     backgroundColor: '#8C74B5',
@@ -89,12 +88,14 @@ export default function ColoringScheme (){
     const zoomRef = useRef(null)
     const [saturation, setSaturation] = useState(0);
     const [file, setFile] = useState();
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () => setOpenModal(true);
+    const handleClose = () => setOpenModal(false);
     useEffect(() => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.src = file ||'https://images.pexels.com/photos/6899804/pexels-photo-6899804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-        //img.src = 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/35302887-bf5b-4c46-a9e0-fc72c65ffb50/d2zaii3-22e60a2b-a164-44bd-a487-cb16589a4799.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzM1MzAyODg3LWJmNWItNGM0Ni1hOWUwLWZjNzJjNjVmZmI1MFwvZDJ6YWlpMy0yMmU2MGEyYi1hMTY0LTQ0YmQtYTQ4Ny1jYjE2NTg5YTQ3OTkuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.hm2OTe9W756fttOuga2kQ5lWBIWQcTyfHkS8qvTygyQ'
-
+       
         img.onload = () => {
             const canvas1 = canvasRef1.current
             ctx1 = canvas1.getContext('2d')
@@ -124,7 +125,7 @@ export default function ColoringScheme (){
         if(canvasRef2 != null){
             const url = canvasRef2.current.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = 'result.png';
+            link.download = 'coloringSheme.png';
             link.href = url;
             link.click();
         }
@@ -286,6 +287,11 @@ export default function ColoringScheme (){
                 </ColorButton>
               </Grid>
             </Grid>
+            <HelpOutlineIcon size = "50px" fontSize='large' onClick={handleOpen} style= {{position: 'absolute', alignSelf: 'end', marginLeft: '10px'}} />
+                        <BasicModal open = {openModal} 
+                                    handleClose = {handleClose} 
+                                    text = "    На цій сторінці ти маєш змогу перевести зображення з колірної моделі RGB в HSV. Ти можеш вивантажити власне зображення та потім завантажити опрацьоване. Також при наведені на зображення внизу ліворуч можна побачити колірні координати пікселя. За допомогою повзунка ти можеш контролювати насиченість по зеленмоу для вихідного зображення."
+                                    />
           </div>
         </div>        
     )

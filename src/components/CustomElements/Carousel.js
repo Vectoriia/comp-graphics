@@ -71,7 +71,6 @@ export default function FractalCarousel (props){
                     <div className='header' style={{fontSize: '31px'}}>Льодовий фрактал</div>
                     <DownloadingIcon fontSize='64x'onClick={(e) => handleCanvas2Download(e)}/> 
                 </div>
-                <DownloadingIcon fontSize='64x' onClick={(e) => handleCanvas2Download(e)}/> 
                 <FrostyFractalCanvas ref={frostyfractalRef} width='600px' height='600px' color = {props.color} limit = {props.limit} pattern = {props.pattern} x = {props.x} y = {props.y}/>
             </div>
         </Carousel>
